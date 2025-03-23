@@ -47,7 +47,7 @@ export class MailsService {
     });
 
     await this.transporter.sendMail({
-      from: `"${this.configService.get<string>('MAIL_FROM_NAME')}" <${this.configService.get<string>('MAIL_FROM_ADDRESS')}>`,
+      from: `"${this.configService.get<string>('SMTP_FROM_NAME')}" <${this.configService.get<string>('SMTP_FROM_ADDRESS')}>`,
       to: email,
       subject: 'Verify your email address',
       html,
