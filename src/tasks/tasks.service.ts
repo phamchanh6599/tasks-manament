@@ -13,7 +13,7 @@ import { Role } from '@/common/enums/role.enum';
 export class TasksService {
   constructor(private supabaseService: SupabaseService) {}
 
-  async create(createTaskDto: CreateTaskDto, creatorId: string): Promise<Task> {
+  async create(createTaskDto: CreateTaskDto): Promise<Task> {
     const { data, error } = await this.supabaseService.client
       .from('tasks')
       .insert({
@@ -21,8 +21,7 @@ export class TasksService {
         description: createTaskDto.description,
         status: createTaskDto.status,
         user_id: createTaskDto.userId,
-        parent_id: createTaskDto.parentId,
-        created_by: creatorId,
+        ...(createTaskDto.parentId && { parent_id: createTaskDto.parentId }),
       })
       .select()
       .single();
